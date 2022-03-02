@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class GameBoard : MonoBehaviour
 {
+    public int removeAttempts = 5;
 
     private int[,] gameBoard = new int[9,9];
     private readonly int size = 9;
+
+    private int[,] gameBoardCopy = new int[9, 9];
+    private int solutionCount;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +25,22 @@ public class GameBoard : MonoBehaviour
             for (int j = 0; j < size; j++)
             {
                 game += gameBoard[i, j] + " ";
+            }
+            game += "\n";
+        }
+        Debug.Log(game);
+
+        CopyBoard();
+        RemoveBoardValues();
+
+
+        //display board
+        game = "\n";
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                game += gameBoardCopy[i, j] + " ";
             }
             game += "\n";
         }
@@ -54,7 +74,7 @@ public class GameBoard : MonoBehaviour
                         {
                             gameBoard[row, col] = (value%9)+1;
 
-                            if (CheckBoard())
+                            if (CheckBoard(gameBoard))
                                 return true;
                             else
                                 if (FillBoard())
@@ -93,18 +113,85 @@ public class GameBoard : MonoBehaviour
     }
 
     //checks if there are any empty spaces left on the game board
-    private bool CheckBoard()
+    private bool CheckBoard(int[,] board)
     {
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
             {
-                if (gameBoard[i, j] == 0)
+                if (board[i, j] == 0)
                     return false;
             }
         }
         return true;
     }
 
+    //Sets a random tile to 0, and check if it has only one solution
+    private void RemoveBoardValues()
+    {
+        int attempts = removeAttempts;
+        while(attempts > 0)
+        {
+            int row = Random.Range(1, 9);
+            int col = Random.Range(1, 9);
+            while(gameBoardCopy[row, col] == 0)
+            {
+                row = Random.Range(1, 9);
+                col = Random.Range(1, 9);
+            }
+
+            int tempValue = gameBoardCopy[row, col];
+            gameBoardCopy[row, col] = 0;
+
+            solutionCount = 0;
+            SolveBoard();
+            if (solutionCount != 1)
+            {
+                gameBoardCopy[row, col] = tempValue;
+                attempts--;
+            }
+        }
+    }
+
+    //trys to solve the current board + counts how many solutions there are (we only want one posible solution)
+    private void SolveBoard()
+    {
+        for (int row = 0; row < size; row++)
+        {
+            for (int col = 0; col < size; col++)
+            {
+                if (gameBoardCopy[row, col] == 0)
+                {
+                    for (int value = 1; value < size+1; value++)//loop throgh possible values
+                    {
+                        if (CheckCorrectPlacement(row, col, value))
+                        {
+                            gameBoardCopy[row, col] = value;
+
+                            if (CheckBoard(gameBoardCopy))
+                            {
+                                solutionCount++;//track number of solutions
+                            }
+                            else
+                                SolveBoard();
+                        }
+                    }
+                    gameBoardCopy[row, col] = 0;
+                    return;//prevent double counting (i.e add val to 1,1 then 2,2 and 2,2 then 1,1 (row,col))
+                }
+            }
+        }
+    }
+
+    private void CopyBoard()
+    {
+        for (int row = 0; row < size; row++)
+        {
+            for (int col = 0; col < size; col++)
+            {
+                gameBoardCopy[row,col] = gameBoard[row, col];
+            }
+        }
+    }
 
 }
