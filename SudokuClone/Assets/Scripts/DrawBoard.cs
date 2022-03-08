@@ -9,7 +9,7 @@ public class DrawBoard : MonoBehaviour
     private readonly int boardSize = 9;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         float xOff, yOff;
         for (int x = 0; x < 9; x++)
@@ -83,5 +83,10 @@ public class DrawBoard : MonoBehaviour
                 tileGrid[xSelect, ySelect].SelectTile();
             }
         }
+    }
+
+    public void SetTileBoard(int x, int y, int num)
+    {
+        tileGrid[x, y].SetStartingNumber(num);
     }
 }

@@ -13,7 +13,7 @@ public class GameBoard : MonoBehaviour
     private int solutionCount;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         InitBoard();
         FillBoard();
@@ -194,4 +194,9 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+
+    public int[,] GetGameBoardCopy()
+    {
+        return gameBoardCopy;
+    }
 }
