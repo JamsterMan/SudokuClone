@@ -7,10 +7,13 @@ public class TileControll : MonoBehaviour
 {
     public Sprite emptyTile;
     public Sprite selectedTile;
+    public Color playerInputCorrect;
 
     private Text text;
 
     private bool isEditable = true;
+    private int correctValue;
+    private int currentValue = 0;
 
     private void Awake()
     {
@@ -28,13 +31,26 @@ public class TileControll : MonoBehaviour
     }
 
     //set value of starting tiles
-    public void SetStartingNumber(int num)
+    public void SetStartingValue(int currentValue, int correctValue)
     {
-        isEditable = false;
-        if(num >0 && num < 9)
+        this.currentValue = currentValue;
+        this.correctValue = correctValue;
+        if(currentValue >0 && currentValue < 10)
         {
-            text.text = "" + num;
+            text.text = "" + currentValue;
             isEditable = false;
+        }
+    }
+
+    public void SetPlayerValue(int value)
+    {
+        if (value > 0 && value < 10 && isEditable)
+        {
+            currentValue = value;
+            //check if correction are on here, then change text colour
+            //
+            text.color = playerInputCorrect;
+            text.text = "" + value;
         }
     }
 

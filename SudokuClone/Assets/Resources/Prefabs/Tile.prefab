@@ -175,15 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emptyTile: {fileID: 21300000, guid: b4c06b54864e65249bb02d4bfd3cf135, type: 3}
   selectedTile: {fileID: 21300000, guid: 051ca0185549e4f498d3bbc3fbae87b3, type: 3}
-  oneTile: {fileID: 21300000, guid: 1a506ded715303a41ba6ae7a3b34d502, type: 3}
-  twoTile: {fileID: 21300000, guid: 5f6b2bfbbca174b41ac5ac4e2870e164, type: 3}
-  threeTile: {fileID: 21300000, guid: 4e193f7b281fb0a419027380292cb08f, type: 3}
-  fourTile: {fileID: 21300000, guid: 3cee845a5b2843847ac5f6372c409be0, type: 3}
-  fiveTile: {fileID: 21300000, guid: 7fe8b7cba0d27fc40aa9aff61bb896a4, type: 3}
-  sixTile: {fileID: 21300000, guid: 7171357ebb6a2b640bc2539b6d67e4d4, type: 3}
-  sevenTile: {fileID: 21300000, guid: 5fb6eb9f5074e8945b0d9bcec05bc740, type: 3}
-  eightTile: {fileID: 21300000, guid: e689785e98bae0e48b24b914eb9d9736, type: 3}
-  nineTile: {fileID: 21300000, guid: d826170e098135341aa92d20d0baac82, type: 3}
+  playerInputCorrect: {r: 0.13333334, g: 0.23137257, b: 0.32941177, a: 1}
 --- !u!1 &8957015987254968422
 GameObject:
   m_ObjectHideFlags: 0

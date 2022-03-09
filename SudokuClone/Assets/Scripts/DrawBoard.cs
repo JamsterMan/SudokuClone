@@ -11,6 +11,13 @@ public class DrawBoard : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        GenerateGrid();
+        tileGrid[0, 8].SelectTile();//0,8 so that selection starts at the top left corner
+    }
+
+    //Generates the 9x9 grid on tiles (spaces added to show the square regions)
+    private void GenerateGrid()
+    {
         float xOff, yOff;
         for (int x = 0; x < 9; x++)
         {
@@ -31,62 +38,64 @@ public class DrawBoard : MonoBehaviour
                     yOff = 0.5f;
                 //tileGrid[x,y] = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x, y, 0), Quaternion.identity) as GameObject;
                 GameObject gameObject = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x + xOff, y + yOff, 0), Quaternion.identity) as GameObject;
+                gameObject.transform.parent = this.transform;//keeps unity editor clean
                 tileGrid[x, y] = gameObject.GetComponent<TileControll>();
             }
         }
-        tileGrid[0, 8].SelectTile();//0,8 so that selection starts at the top left corner
     }
 
-    // Update is called once per frame
-    void Update()
+    //move selection to the left if possible
+    public void TileSelectionLeft()
     {
-        TileSelection();//move this to a game controller??
-
+        if (xSelect > 0)
+        {
+            tileGrid[xSelect, ySelect].DeSelectTile();
+            xSelect--;
+            tileGrid[xSelect, ySelect].SelectTile();
+        }
     }
-
-    //changes Selected tile based on arrow key input
-    private void TileSelection()
+    //move selection to the right if possible
+    public void TileSelectionRight()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))//move left
+        if (xSelect < boardSize - 1)
         {
-            if (xSelect > 0)
-            {
-                tileGrid[xSelect, ySelect].DeSelectTile();
-                xSelect--;
-                tileGrid[xSelect, ySelect].SelectTile();
-            }
+            tileGrid[xSelect, ySelect].DeSelectTile();
+            xSelect++;
+            tileGrid[xSelect, ySelect].SelectTile();
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))//move right
+    }
+    //move selection to the up if possible
+    public void TileSelectionUp()
+    {
+        if (ySelect < boardSize - 1)
         {
-            if (xSelect < boardSize - 1)
-            {
-                tileGrid[xSelect, ySelect].DeSelectTile();
-                xSelect++;
-                tileGrid[xSelect, ySelect].SelectTile();
-            }
+            tileGrid[xSelect, ySelect].DeSelectTile();
+            ySelect++;
+            tileGrid[xSelect, ySelect].SelectTile();
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))//move up
+    }
+    //move selection to the down if possible
+    public void TileSelectionDown()
+    {
+        if (ySelect > 0)
         {
-            if (ySelect < boardSize - 1)
-            {
-                tileGrid[xSelect, ySelect].DeSelectTile();
-                ySelect++;
-                tileGrid[xSelect, ySelect].SelectTile();
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))//move down
-        {
-            if (ySelect > 0)
-            {
-                tileGrid[xSelect, ySelect].DeSelectTile();
-                ySelect--;
-                tileGrid[xSelect, ySelect].SelectTile();
-            }
+            tileGrid[xSelect, ySelect].DeSelectTile();
+            ySelect--;
+            tileGrid[xSelect, ySelect].SelectTile();
         }
     }
 
-    public void SetTileBoard(int x, int y, int num)
+    //adds value to tile that is currently selected
+    public void AddTileValue(int value)
     {
-        tileGrid[x, y].SetStartingNumber(num);
+        tileGrid[xSelect, ySelect].SetPlayerValue(value);
+    }
+    
+    //sets tiles to starting values
+    //correct value is the value when the board is filled
+    //current value is the value after removing numbers
+    public void SetTileBoard(int x, int y, int currentValue, int correctValue)
+    {
+        tileGrid[x, y].SetStartingValue(currentValue, correctValue);
     }
 }

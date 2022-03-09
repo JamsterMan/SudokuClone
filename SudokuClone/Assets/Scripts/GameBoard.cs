@@ -199,4 +199,9 @@ public class GameBoard : MonoBehaviour
     {
         return gameBoardCopy;
     }
+
+    public int[,] GetGameBoard()
+    {
+        return gameBoard;
+    }
 }
