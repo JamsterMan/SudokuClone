@@ -8,19 +8,19 @@ public class GameController : MonoBehaviour
     public DrawBoard drawBoard;
 
     private readonly int boardSize = 9;
-    //private int[,] boardGrid = new int[9,9];
+    private bool isGameDone = false;
 
     // Start is called before the first frame update
     void Start()
     {
         int[,] boardGrid = gameBoard.GetGameBoardCopy();
-        int[,] boardGridFilled = gameBoard.GetGameBoardCopy();
+        int[,] boardGridFilled = gameBoard.GetGameBoard();
 
         for (int x = 0; x < boardSize; x++)
         {
             for (int y = 0; y < boardSize; y++)
             {
-                drawBoard.SetTileBoard(x, y, boardGrid[x, y], boardGridFilled[x,y]);
+                drawBoard.SetTileBoard(x, y, boardGrid[x, y], boardGridFilled[x, y]);
             }
         }
     }
@@ -29,7 +29,21 @@ public class GameController : MonoBehaviour
     void Update()
     {
         MoveSelection();
-        AddPlayerValue();
+        if (isGameDone == false)
+        {
+            AddPlayerValue();
+
+            if (Input.GetKeyDown(KeyCode.F) )//for testing, fills board with correct values
+            {
+                CompleteBoard();
+            }
+
+            if (drawBoard.IsBoardCorrect())
+            {
+                Debug.Log("Game Win!");
+                isGameDone = true;
+            }
+        }
     }
 
     //moves the selected tile based on the arrows keys
@@ -92,5 +106,11 @@ public class GameController : MonoBehaviour
         {
             drawBoard.AddTileValue(9);
         }
+    }
+
+    //for testing
+    private void CompleteBoard()
+    {
+        drawBoard.CompleteBoardTiles();
     }
 }

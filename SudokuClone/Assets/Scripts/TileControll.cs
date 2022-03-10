@@ -60,4 +60,21 @@ public class TileControll : MonoBehaviour
         return isEditable;
     }
 
+    //returns if tile has the correct value
+    public bool IsTileCorrect()
+    {
+        return currentValue == correctValue;
+    }
+
+    //for testing
+    public void CompleteTile()
+    {
+        if (isEditable)
+        {
+            currentValue = correctValue;
+            text.color = playerInputCorrect;
+            text.text = "" + currentValue;
+        }
+    }
+
 }

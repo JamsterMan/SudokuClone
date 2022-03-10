@@ -36,8 +36,8 @@ public class DrawBoard : MonoBehaviour
                     yOff = 0.25f;
                 else
                     yOff = 0.5f;
-                //tileGrid[x,y] = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x, y, 0), Quaternion.identity) as GameObject;
-                GameObject gameObject = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x + xOff, y + yOff, 0), Quaternion.identity) as GameObject;
+
+                GameObject gameObject = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x + xOff,  y + yOff, 0), Quaternion.identity) as GameObject;
                 gameObject.transform.parent = this.transform;//keeps unity editor clean
                 tileGrid[x, y] = gameObject.GetComponent<TileControll>();
             }
@@ -97,5 +97,32 @@ public class DrawBoard : MonoBehaviour
     public void SetTileBoard(int x, int y, int currentValue, int correctValue)
     {
         tileGrid[x, y].SetStartingValue(currentValue, correctValue);
+    }
+
+    //checks if the board is correct and completely filled
+    public bool IsBoardCorrect()
+    {
+        for (int x = 0; x < boardSize; x++)
+        {
+            for (int y = 0; y < boardSize; y++)
+            {
+                if (tileGrid[x, y].IsTileCorrect() == false)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+
+    //for testing
+    public void CompleteBoardTiles()
+    {
+        for (int x = 0; x < boardSize; x++)
+        {
+            for (int y = 0; y < boardSize; y++)
+            {
+                tileGrid[x, y].CompleteTile();
+            }
+        }
     }
 }

@@ -17,30 +17,28 @@ public class GameBoard : MonoBehaviour
     {
         InitBoard();
         FillBoard();
+        CopyBoard();
+        RemoveBoardValues();
 
         //display board
         string game = "\n";
-        for (int i = 0; i < size; i++)
+        for (int i = size - 1; i >= 0; i--)
         {
             for (int j = 0; j < size; j++)
             {
-                game += gameBoard[i, j] + " ";
+                game += gameBoard[j, i] + " ";
             }
             game += "\n";
         }
         Debug.Log(game);
 
-        CopyBoard();
-        RemoveBoardValues();
-
-
-        //display board
+        //display board copy
         game = "\n";
-        for (int i = 0; i < size; i++)
+        for (int i = size-1; i >= 0; i--)
         {
             for (int j = 0; j < size; j++)
             {
-                game += gameBoardCopy[i, j] + " ";
+                game += gameBoardCopy[j, i] + " ";
             }
             game += "\n";
         }
