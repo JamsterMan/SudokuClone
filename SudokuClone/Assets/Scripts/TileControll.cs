@@ -9,6 +9,7 @@ public class TileControll : MonoBehaviour
     public Sprite selectedTile;
     public Sprite highlightTile;
     public Color playerInputCorrect;
+    public Color playerInputIncorrect;
 
     private Text text;
 
@@ -53,14 +54,27 @@ public class TileControll : MonoBehaviour
         }
     }
 
-    public void SetPlayerValue(int value)
+    //sets value if player input it
+    public void SetPlayerValue(int value, bool checkCorrectness)
     {
         if (value > 0 && value < 10 && isEditable)
         {
             currentValue = value;
             //check if correction are on here, then change text colour
             //
-            text.color = playerInputCorrect;
+            if (checkCorrectness)
+            {
+                if(currentValue == correctValue)
+                {
+                    text.color = playerInputCorrect;
+                }
+                else
+                {
+                    text.color = playerInputIncorrect;
+                }
+            }
+            else
+                text.color = playerInputCorrect;
             text.text = "" + value;
         }
     }
@@ -85,6 +99,31 @@ public class TileControll : MonoBehaviour
             currentValue = correctValue;
             text.color = playerInputCorrect;
             text.text = "" + currentValue;
+        }
+    }
+
+    //changes text color to check for correctness
+    public void StartCorrectnessCheck()
+    {
+        if (isEditable)
+        {
+            if (currentValue == correctValue)
+            {
+                text.color = playerInputCorrect;
+            }
+            else if( currentValue != 0)//empty tile check
+            {
+                text.color = playerInputIncorrect;
+            }
+        }
+    }
+
+    //changes text color to stop checking for correctness
+    public void StopCorrectnessCheck()
+    {
+        if (isEditable)
+        {
+            text.color = playerInputCorrect;
         }
     }
 

@@ -163,9 +163,9 @@ public class DrawBoard : MonoBehaviour
     }
 
     //adds value to tile that is currently selected
-    public void AddTileValue(int value)
+    public void AddTileValue(int value, bool checkCorrectness)
     {
-        tileGrid[xSelect, ySelect].SetPlayerValue(value);
+        tileGrid[xSelect, ySelect].SetPlayerValue(value, checkCorrectness);
     }
     
     //sets tiles to starting values
@@ -190,6 +190,30 @@ public class DrawBoard : MonoBehaviour
         return true;
     }
 
+    //sets tiles to the correct text color 
+    public void SetBoardCorrectness(bool checkCorrectness)
+    {
+        if (checkCorrectness)
+        {
+            for (int x = 0; x < boardSize; x++)
+            {
+                for (int y = 0; y < boardSize; y++)
+                {
+                    tileGrid[x, y].StartCorrectnessCheck();
+                }
+            }
+        }
+        else
+        {
+            for (int x = 0; x < boardSize; x++)
+            {
+                for (int y = 0; y < boardSize; y++)
+                {
+                    tileGrid[x, y].StopCorrectnessCheck();
+                }
+            }
+        }
+    }
 
     //for testing
     public void CompleteBoardTiles()

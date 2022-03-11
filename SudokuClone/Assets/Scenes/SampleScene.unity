@@ -342,3 +342,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameBoard: {fileID: 988187931}
   drawBoard: {fileID: 988187933}
+  checkCorrectness: 1

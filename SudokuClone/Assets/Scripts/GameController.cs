@@ -6,13 +6,16 @@ public class GameController : MonoBehaviour
 {
     public GameBoard gameBoard;
     public DrawBoard drawBoard;
+    public bool checkCorrectness = false;
 
     private readonly int boardSize = 9;
     private bool isGameDone = false;
+    private bool checkCorrectnessChange;
 
     // Start is called before the first frame update
     void Start()
     {
+        checkCorrectnessChange = checkCorrectness;
         int[,] boardGrid = gameBoard.GetGameBoardCopy();
         int[,] boardGridFilled = gameBoard.GetGameBoard();
 
@@ -32,6 +35,12 @@ public class GameController : MonoBehaviour
         if (isGameDone == false)
         {
             AddPlayerValue();
+
+            if(checkCorrectness != checkCorrectnessChange)
+            {
+                checkCorrectnessChange = checkCorrectness;
+                drawBoard.SetBoardCorrectness(checkCorrectness);
+            }
 
             if (Input.GetKeyDown(KeyCode.F) )//for testing, fills board with correct values
             {
@@ -72,39 +81,39 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1) )//move left
         {
-            drawBoard.AddTileValue(1);
+            drawBoard.AddTileValue(1, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))//move left
         {
-            drawBoard.AddTileValue(2);
+            drawBoard.AddTileValue(2, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))//move left
         {
-            drawBoard.AddTileValue(3);
+            drawBoard.AddTileValue(3, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))//move left
         {
-            drawBoard.AddTileValue(4);
+            drawBoard.AddTileValue(4, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5))//move left
         {
-            drawBoard.AddTileValue(5);
+            drawBoard.AddTileValue(5, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6))//move left
         {
-            drawBoard.AddTileValue(6);
+            drawBoard.AddTileValue(6, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.Alpha7))//move left
         {
-            drawBoard.AddTileValue(7);
+            drawBoard.AddTileValue(7, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.Alpha8))//move left
         {
-            drawBoard.AddTileValue(8);
+            drawBoard.AddTileValue(8, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad9) || Input.GetKeyDown(KeyCode.Alpha9))//move left
         {
-            drawBoard.AddTileValue(9);
+            drawBoard.AddTileValue(9, checkCorrectness);
         }
     }
 
