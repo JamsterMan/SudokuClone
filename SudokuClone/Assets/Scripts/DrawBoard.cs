@@ -12,7 +12,8 @@ public class DrawBoard : MonoBehaviour
     void Awake()
     {
         GenerateGrid();
-        tileGrid[0, 8].SelectTile();//0,8 so that selection starts at the top left corner
+        HighlightImportantTiles();
+        tileGrid[xSelect, ySelect].SelectTile();//0,8 so that selection starts at the top left corner
     }
 
     //Generates the 9x9 grid on tiles (spaces added to show the square regions)
@@ -49,8 +50,10 @@ public class DrawBoard : MonoBehaviour
     {
         if (xSelect > 0)
         {
+            UnHighlightImportantTiles();
             tileGrid[xSelect, ySelect].DeSelectTile();
             xSelect--;
+            HighlightImportantTiles();
             tileGrid[xSelect, ySelect].SelectTile();
         }
     }
@@ -59,8 +62,10 @@ public class DrawBoard : MonoBehaviour
     {
         if (xSelect < boardSize - 1)
         {
+            UnHighlightImportantTiles();
             tileGrid[xSelect, ySelect].DeSelectTile();
             xSelect++;
+            HighlightImportantTiles();
             tileGrid[xSelect, ySelect].SelectTile();
         }
     }
@@ -69,8 +74,10 @@ public class DrawBoard : MonoBehaviour
     {
         if (ySelect < boardSize - 1)
         {
+            UnHighlightImportantTiles();
             tileGrid[xSelect, ySelect].DeSelectTile();
             ySelect++;
+            HighlightImportantTiles();
             tileGrid[xSelect, ySelect].SelectTile();
         }
     }
@@ -79,10 +86,80 @@ public class DrawBoard : MonoBehaviour
     {
         if (ySelect > 0)
         {
+            UnHighlightImportantTiles();
             tileGrid[xSelect, ySelect].DeSelectTile();
             ySelect--;
+            HighlightImportantTiles();
             tileGrid[xSelect, ySelect].SelectTile();
         }
+    }
+
+    //highlights every tile that cant have the same number as the selected tile
+    //eg. whole row, whole column, square containing selected tile
+    private void HighlightImportantTiles()
+    {
+        int xOff, yOff,x,y;
+        if (xSelect < 3)
+            xOff = 0;
+        else if (xSelect < 6)
+            xOff = 3;
+        else
+            xOff = 6;
+        if (ySelect < 3)
+            yOff = 0;
+        else if (ySelect < 6)
+            yOff = 3;
+        else
+            yOff = 6;
+        for (x = xOff; x < xOff +3; x++)//highlight square containing selected tile
+        {
+            for (y = yOff; y < yOff + 3; y++)
+            {
+                tileGrid[x, y].HighlightTile();
+            }
+        }
+        for (x = 0; x < boardSize; x++)//highlight row
+        {
+            tileGrid[x, ySelect].HighlightTile();
+        }
+        for (y = 0; y < boardSize; y++)//highlight column
+        {
+            tileGrid[xSelect, y].HighlightTile();
+        }
+
+    }
+
+    private void UnHighlightImportantTiles()
+    {
+        int xOff, yOff, x, y;
+        if (xSelect < 3)
+            xOff = 0;
+        else if (xSelect < 6)
+            xOff = 3;
+        else
+            xOff = 6;
+        if (ySelect < 3)
+            yOff = 0;
+        else if (ySelect < 6)
+            yOff = 3;
+        else
+            yOff = 6;
+        for (x = xOff; x < xOff + 3; x++)//highlight square containing selected tile
+        {
+            for (y = yOff; y < yOff + 3; y++)
+            {
+                tileGrid[x, y].UnHighlightTile();
+            }
+        }
+        for (x = 0; x < boardSize; x++)//highlight row
+        {
+            tileGrid[x, ySelect].UnHighlightTile();
+        }
+        for (y = 0; y < boardSize; y++)//highlight column
+        {
+            tileGrid[xSelect, y].UnHighlightTile();
+        }
+
     }
 
     //adds value to tile that is currently selected

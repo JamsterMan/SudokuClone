@@ -7,6 +7,7 @@ public class TileControll : MonoBehaviour
 {
     public Sprite emptyTile;
     public Sprite selectedTile;
+    public Sprite highlightTile;
     public Color playerInputCorrect;
 
     private Text text;
@@ -28,6 +29,16 @@ public class TileControll : MonoBehaviour
     public void DeSelectTile()
     {
         GetComponent<SpriteRenderer>().sprite = emptyTile;
+    }
+
+    public void UnHighlightTile()
+    {
+        GetComponent<SpriteRenderer>().sprite = emptyTile;
+    }
+
+    public void HighlightTile()
+    {
+        GetComponent<SpriteRenderer>().sprite = highlightTile;
     }
 
     //set value of starting tiles

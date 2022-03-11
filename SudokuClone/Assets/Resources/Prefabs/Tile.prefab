@@ -174,7 +174,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyTile: {fileID: 21300000, guid: b4c06b54864e65249bb02d4bfd3cf135, type: 3}
-  selectedTile: {fileID: 21300000, guid: 051ca0185549e4f498d3bbc3fbae87b3, type: 3}
+  selectedTile: {fileID: 21300000, guid: 238f8b0bc46a4b64886a5daa223ef5e1, type: 3}
+  highlightTile: {fileID: 21300000, guid: 051ca0185549e4f498d3bbc3fbae87b3, type: 3}
   playerInputCorrect: {r: 0.13333334, g: 0.23137257, b: 0.32941177, a: 1}
 --- !u!1 &8957015987254968422
 GameObject:
