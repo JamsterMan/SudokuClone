@@ -127,4 +127,12 @@ public class TileControll : MonoBehaviour
         }
     }
 
+    public void ResetTile()
+    {
+        isEditable = true;
+        currentValue = 0;
+        correctValue = 0;
+        text.text = "";
+    }
+
 }

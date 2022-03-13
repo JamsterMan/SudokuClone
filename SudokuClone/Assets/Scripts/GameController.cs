@@ -15,17 +15,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        checkCorrectnessChange = checkCorrectness;
-        int[,] boardGrid = gameBoard.GetGameBoardCopy();
-        int[,] boardGridFilled = gameBoard.GetGameBoard();
-
-        for (int x = 0; x < boardSize; x++)
-        {
-            for (int y = 0; y < boardSize; y++)
-            {
-                drawBoard.SetTileBoard(x, y, boardGrid[x, y], boardGridFilled[x, y]);
-            }
-        }
+        SetUpGameBoard();
     }
 
     // Update is called once per frame
@@ -36,13 +26,13 @@ public class GameController : MonoBehaviour
         {
             AddPlayerValue();
 
-            if(checkCorrectness != checkCorrectnessChange)
+            if (checkCorrectness != checkCorrectnessChange)
             {
                 checkCorrectnessChange = checkCorrectness;
                 drawBoard.SetBoardCorrectness(checkCorrectness);
             }
 
-            if (Input.GetKeyDown(KeyCode.F) )//for testing, fills board with correct values
+            if (Input.GetKeyDown(KeyCode.F))//for testing, fills board with correct values
             {
                 CompleteBoard();
             }
@@ -79,7 +69,7 @@ public class GameController : MonoBehaviour
     //adds inputed number to the grid
     private void AddPlayerValue()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1) )//move left
+        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))//move left
         {
             drawBoard.AddTileValue(1, checkCorrectness);
         }
@@ -121,5 +111,30 @@ public class GameController : MonoBehaviour
     private void CompleteBoard()
     {
         drawBoard.CompleteBoardTiles();
+    }
+
+    private void SetUpGameBoard()
+    {
+        checkCorrectnessChange = checkCorrectness;
+        int[,] boardGrid = gameBoard.GetGameBoardCopy();
+        int[,] boardGridFilled = gameBoard.GetGameBoard();
+
+        for (int x = 0; x < boardSize; x++)
+        {
+            for (int y = 0; y < boardSize; y++)
+            {
+                drawBoard.SetTileBoard(x, y, boardGrid[x, y], boardGridFilled[x, y]);
+            }
+        }
+    }
+
+    //get a new board layout
+    public void NewBoard()
+    {
+        isGameDone = false;
+        gameBoard.NewGameBoard();
+        drawBoard.ResetTiles();
+        SetUpGameBoard();
+        Debug.Log("New Game Started");
     }
 }

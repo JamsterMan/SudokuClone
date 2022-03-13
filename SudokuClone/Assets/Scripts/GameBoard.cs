@@ -15,34 +15,7 @@ public class GameBoard : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        InitBoard();
-        FillBoard();
-        CopyBoard();
-        RemoveBoardValues();
-
-        //display board
-        string game = "\n";
-        for (int i = size - 1; i >= 0; i--)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                game += gameBoard[j, i] + " ";
-            }
-            game += "\n";
-        }
-        Debug.Log(game);
-
-        //display board copy
-        game = "\n";
-        for (int i = size-1; i >= 0; i--)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                game += gameBoardCopy[j, i] + " ";
-            }
-            game += "\n";
-        }
-        Debug.Log(game);
+        NewGameBoard();
     }
 
     //set all values to 0 to help board creation
@@ -201,5 +174,13 @@ public class GameBoard : MonoBehaviour
     public int[,] GetGameBoard()
     {
         return gameBoard;
+    }
+
+    public void NewGameBoard()
+    {
+        InitBoard();
+        FillBoard();
+        CopyBoard();
+        RemoveBoardValues();
     }
 }

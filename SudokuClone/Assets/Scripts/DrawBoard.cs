@@ -16,11 +16,22 @@ public class DrawBoard : MonoBehaviour
         tileGrid[xSelect, ySelect].SelectTile();//0,8 so that selection starts at the top left corner
     }
 
+    public void ResetTiles()
+    {
+        for (int x = 0; x < boardSize; x++)
+        {
+            for (int y = 0; y < boardSize; y++)
+            {
+                tileGrid[x, y].ResetTile();
+            }
+        }
+    }
+
     //Generates the 9x9 grid on tiles (spaces added to show the square regions)
     private void GenerateGrid()
     {
         float xOff, yOff;
-        for (int x = 0; x < 9; x++)
+        for (int x = 0; x < boardSize; x++)
         {
             if (x < 3)
                 xOff = 0f;
@@ -29,7 +40,7 @@ public class DrawBoard : MonoBehaviour
             else
                 xOff = 0.5f;
 
-            for (int y = 0; y < 9; y++)
+            for (int y = 0; y < boardSize; y++)
             {
                 if (y < 3)
                     yOff = 0f;
