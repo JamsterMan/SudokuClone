@@ -137,4 +137,9 @@ public class GameController : MonoBehaviour
         SetUpGameBoard();
         Debug.Log("New Game Started");
     }
+
+    public void CheckForMistakes(bool checkMistakes)
+    {
+        checkCorrectness = checkMistakes;
+    }
 }
