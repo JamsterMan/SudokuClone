@@ -20,6 +20,7 @@ public class TileControll : MonoBehaviour
     private void Awake()
     {
         text = GetComponentInChildren<Text>();
+        GetComponent<SpriteRenderer>().sprite = emptyTile;
     }
 
     public void SelectTile()
