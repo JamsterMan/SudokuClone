@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
     public GameBoard gameBoard;
     public DrawBoard drawBoard;
     public bool checkCorrectness = false;
+    public bool addNotes = false;
 
     private readonly int boardSize = 9;
     private bool isGameDone = false;
@@ -24,7 +25,7 @@ public class GameController : MonoBehaviour
         MoveSelection();
         if (isGameDone == false)
         {
-            AddPlayerValue();
+            PlayerInput();
 
             if (checkCorrectness != checkCorrectnessChange)
             {
@@ -67,43 +68,74 @@ public class GameController : MonoBehaviour
     }
 
     //adds inputed number to the grid
-    private void AddPlayerValue()
+    private void PlayerInput()
     {
         if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))//move left
         {
-            drawBoard.AddTileValue(1, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(1);
+            else
+                drawBoard.AddTileValue(1, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))//move left
         {
-            drawBoard.AddTileValue(2, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(2);
+            else
+                drawBoard.AddTileValue(2, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))//move left
         {
-            drawBoard.AddTileValue(3, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(3);
+            else
+                drawBoard.AddTileValue(3, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))//move left
         {
-            drawBoard.AddTileValue(4, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(4);
+            else
+                drawBoard.AddTileValue(4, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5))//move left
         {
-            drawBoard.AddTileValue(5, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(5);
+            else
+                drawBoard.AddTileValue(5, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6))//move left
         {
-            drawBoard.AddTileValue(6, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(6);
+            else
+                drawBoard.AddTileValue(6, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.Alpha7))//move left
         {
-            drawBoard.AddTileValue(7, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(7);
+            else
+                drawBoard.AddTileValue(7, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.Alpha8))//move left
         {
-            drawBoard.AddTileValue(8, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(8);
+            else
+                drawBoard.AddTileValue(8, checkCorrectness);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad9) || Input.GetKeyDown(KeyCode.Alpha9))//move left
         {
-            drawBoard.AddTileValue(9, checkCorrectness);
+            if (addNotes)
+                drawBoard.AddNoteValue(9);
+            else
+                drawBoard.AddTileValue(9, checkCorrectness);
+        }
+        else if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            drawBoard.RemoveTileValue();
         }
     }
 
@@ -141,5 +173,10 @@ public class GameController : MonoBehaviour
     public void CheckForMistakes(bool checkMistakes)
     {
         checkCorrectness = checkMistakes;
+    }
+
+    public void SetAddNotes(bool notes)
+    {
+        addNotes = notes;
     }
 }

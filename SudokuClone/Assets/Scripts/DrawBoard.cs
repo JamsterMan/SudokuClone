@@ -178,6 +178,18 @@ public class DrawBoard : MonoBehaviour
     {
         tileGrid[xSelect, ySelect].SetPlayerValue(value, checkCorrectness);
     }
+
+    //remove value in selected tile
+    public void RemoveTileValue()
+    {
+        tileGrid[xSelect, ySelect].RemoveValue();
+    }
+
+    //adds val as a note (not counted in correctness/completion)
+    public void AddNoteValue(int value)
+    {
+        tileGrid[xSelect, ySelect].SetNoteValue(value);
+    }
     
     //sets tiles to starting values
     //correct value is the value when the board is filled

@@ -12,6 +12,7 @@ public class TileControll : MonoBehaviour
     public Color playerInputIncorrect;
 
     private Text text;
+    private NoteControl notes;
 
     private bool isEditable = true;
     private int correctValue;
@@ -20,6 +21,7 @@ public class TileControll : MonoBehaviour
     private void Awake()
     {
         text = GetComponentInChildren<Text>();
+        notes = GetComponentInChildren<NoteControl>();
         GetComponent<SpriteRenderer>().sprite = emptyTile;
     }
 
@@ -61,8 +63,6 @@ public class TileControll : MonoBehaviour
         if (value > 0 && value < 10 && isEditable)
         {
             currentValue = value;
-            //check if correction are on here, then change text colour
-            //
             if (checkCorrectness)
             {
                 if(currentValue == correctValue)
@@ -77,6 +77,7 @@ public class TileControll : MonoBehaviour
             else
                 text.color = playerInputCorrect;
             text.text = "" + value;
+            RemoveAllNotes();// remove notes when value is added
         }
     }
 
@@ -92,7 +93,7 @@ public class TileControll : MonoBehaviour
         return currentValue == correctValue;
     }
 
-    //for testing
+    //for testing**********************************************************
     public void CompleteTile()
     {
         if (isEditable)
@@ -128,12 +129,36 @@ public class TileControll : MonoBehaviour
         }
     }
 
+    //resets the Tile
     public void ResetTile()
     {
         isEditable = true;
         currentValue = 0;
         correctValue = 0;
         text.text = "";
+    }
+
+    //remove the added value
+    public void RemoveValue()
+    {
+        if (isEditable)
+        {
+            currentValue = 0;
+            text.text = "";
+        }
+    }
+
+    //removes all notes
+    private void RemoveAllNotes()
+    {
+        notes.RemoveNotes();
+    }
+
+    //show the note corrisponding to val (1 to 9)
+    public void SetNoteValue(int val)
+    {
+        if (isEditable && currentValue == 0)
+            notes.ShowNoteValue(val);
     }
 
 }
