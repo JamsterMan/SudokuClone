@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class TileControll : MonoBehaviour
 {
-    public Sprite emptyTile;
+    public Sprite normalTile;
     public Sprite selectedTile;
     public Sprite highlightTile;
+    public Sprite sameAsSelectedTile;
     public Color playerInputCorrect;
     public Color playerInputIncorrect;
 
@@ -22,27 +23,31 @@ public class TileControll : MonoBehaviour
     {
         text = GetComponentInChildren<Text>();
         notes = GetComponentInChildren<NoteControl>();
-        GetComponent<SpriteRenderer>().sprite = emptyTile;
+        GetComponent<SpriteRenderer>().sprite = normalTile;
     }
 
+    //sets tile to selected sprite
     public void SelectTile()
     {
         GetComponent<SpriteRenderer>().sprite = selectedTile;
     }
 
-    public void DeSelectTile()
+    //sets tile to normal tile sprite
+    public void SetNormalTile()
     {
-        GetComponent<SpriteRenderer>().sprite = emptyTile;
+        GetComponent<SpriteRenderer>().sprite = normalTile;
     }
 
-    public void UnHighlightTile()
-    {
-        GetComponent<SpriteRenderer>().sprite = emptyTile;
-    }
-
+    //sets tile to highlighted sprite
     public void HighlightTile()
     {
         GetComponent<SpriteRenderer>().sprite = highlightTile;
+    }
+
+    //Sets tile to sameAsSelectedTile sprite
+    public void HighlightSameNumberTile()
+    {
+        GetComponent<SpriteRenderer>().sprite = sameAsSelectedTile;
     }
 
     //set value of starting tiles
@@ -93,17 +98,6 @@ public class TileControll : MonoBehaviour
         return currentValue == correctValue;
     }
 
-    //for testing**********************************************************
-    public void CompleteTile()
-    {
-        if (isEditable)
-        {
-            currentValue = correctValue;
-            text.color = playerInputCorrect;
-            text.text = "" + currentValue;
-        }
-    }
-
     //changes text color to check for correctness
     public void StartCorrectnessCheck()
     {
@@ -129,7 +123,7 @@ public class TileControll : MonoBehaviour
         }
     }
 
-    //resets the Tile
+    //resets the Tile to creation values
     public void ResetTile()
     {
         isEditable = true;
@@ -161,4 +155,20 @@ public class TileControll : MonoBehaviour
             notes.ShowNoteValue(val);
     }
 
+    //currentValue gettter
+    public int GetCurrentValue()
+    {
+        return currentValue;
+    }
+
+    //for testing**********************************************************
+    public void CompleteTile()
+    {
+        if (isEditable)
+        {
+            currentValue = correctValue;
+            text.color = playerInputCorrect;
+            text.text = "" + currentValue;
+        }
+    }
 }

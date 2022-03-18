@@ -61,11 +61,9 @@ public class DrawBoard : MonoBehaviour
     {
         if (xSelect > 0)
         {
-            UnHighlightImportantTiles();
-            tileGrid[xSelect, ySelect].DeSelectTile();
+            TileUnhighlighting();
             xSelect--;
-            HighlightImportantTiles();
-            tileGrid[xSelect, ySelect].SelectTile();
+            TileHighlighting();
         }
     }
     //move selection to the right if possible
@@ -73,11 +71,9 @@ public class DrawBoard : MonoBehaviour
     {
         if (xSelect < boardSize - 1)
         {
-            UnHighlightImportantTiles();
-            tileGrid[xSelect, ySelect].DeSelectTile();
+            TileUnhighlighting();
             xSelect++;
-            HighlightImportantTiles();
-            tileGrid[xSelect, ySelect].SelectTile();
+            TileHighlighting();
         }
     }
     //move selection to the up if possible
@@ -85,11 +81,9 @@ public class DrawBoard : MonoBehaviour
     {
         if (ySelect < boardSize - 1)
         {
-            UnHighlightImportantTiles();
-            tileGrid[xSelect, ySelect].DeSelectTile();
+            TileUnhighlighting();
             ySelect++;
-            HighlightImportantTiles();
-            tileGrid[xSelect, ySelect].SelectTile();
+            TileHighlighting();
         }
     }
     //move selection to the down if possible
@@ -97,11 +91,40 @@ public class DrawBoard : MonoBehaviour
     {
         if (ySelect > 0)
         {
-            UnHighlightImportantTiles();
-            tileGrid[xSelect, ySelect].DeSelectTile();
+            TileUnhighlighting();
             ySelect--;
-            HighlightImportantTiles();
-            tileGrid[xSelect, ySelect].SelectTile();
+            TileHighlighting();
+        }
+    }
+
+    //highlights tiles involving selceted tile
+    //eg. row, column, square, and same number value tiles
+    private void TileHighlighting()
+    {
+        if (tileGrid[xSelect, ySelect].GetCurrentValue() != 0) {
+            for (int x = 0; x < boardSize; x++)
+            {
+                for (int y = 0; y < boardSize; y++)
+                {
+                    if (tileGrid[xSelect, ySelect].GetCurrentValue() == tileGrid[x, y].GetCurrentValue())
+                        tileGrid[x, y].HighlightSameNumberTile();
+                }
+            }
+        }
+
+        HighlightImportantTiles();
+        tileGrid[xSelect, ySelect].SelectTile();
+    }
+
+    //Unhighlights all tiles
+    private void TileUnhighlighting()
+    {
+        for (int x = 0; x < boardSize; x++)
+        {
+            for (int y = 0; y < boardSize; y++)
+            {
+                tileGrid[x, y].SetNormalTile();
+            }
         }
     }
 
@@ -136,39 +159,6 @@ public class DrawBoard : MonoBehaviour
         for (y = 0; y < boardSize; y++)//highlight column
         {
             tileGrid[xSelect, y].HighlightTile();
-        }
-
-    }
-
-    private void UnHighlightImportantTiles()
-    {
-        int xOff, yOff, x, y;
-        if (xSelect < 3)
-            xOff = 0;
-        else if (xSelect < 6)
-            xOff = 3;
-        else
-            xOff = 6;
-        if (ySelect < 3)
-            yOff = 0;
-        else if (ySelect < 6)
-            yOff = 3;
-        else
-            yOff = 6;
-        for (x = xOff; x < xOff + 3; x++)//highlight square containing selected tile
-        {
-            for (y = yOff; y < yOff + 3; y++)
-            {
-                tileGrid[x, y].UnHighlightTile();
-            }
-        }
-        for (x = 0; x < boardSize; x++)//highlight row
-        {
-            tileGrid[x, ySelect].UnHighlightTile();
-        }
-        for (y = 0; y < boardSize; y++)//highlight column
-        {
-            tileGrid[xSelect, y].UnHighlightTile();
         }
 
     }

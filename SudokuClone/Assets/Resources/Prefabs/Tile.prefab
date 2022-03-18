@@ -933,11 +933,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8edea037c12ba824b98c2ad262e7cc00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyTile: {fileID: -8377130690987618698, guid: 25cba671ecdc8534c8d4cd40706bf688,
+  normalTile: {fileID: -8377130690987618698, guid: 25cba671ecdc8534c8d4cd40706bf688,
     type: 3}
   selectedTile: {fileID: -5062486230716756072, guid: 25cba671ecdc8534c8d4cd40706bf688,
     type: 3}
   highlightTile: {fileID: -4684333735789482159, guid: 25cba671ecdc8534c8d4cd40706bf688,
+    type: 3}
+  sameAsSelectedTile: {fileID: 7223950226953391895, guid: 25cba671ecdc8534c8d4cd40706bf688,
     type: 3}
   playerInputCorrect: {r: 0.31764707, g: 0.454902, b: 0.5294118, a: 1}
   playerInputIncorrect: {r: 0.49056602, g: 0, b: 0, a: 1}
