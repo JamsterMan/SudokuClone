@@ -941,6 +941,7 @@ MonoBehaviour:
     type: 3}
   sameAsSelectedTile: {fileID: 7223950226953391895, guid: 25cba671ecdc8534c8d4cd40706bf688,
     type: 3}
+  IncorrectTile: {fileID: 21300000, guid: 238f8b0bc46a4b64886a5daa223ef5e1, type: 3}
   playerInputCorrect: {r: 0.31764707, g: 0.454902, b: 0.5294118, a: 1}
   playerInputIncorrect: {r: 0.49056602, g: 0, b: 0, a: 1}
 --- !u!1 &8957015987254968422

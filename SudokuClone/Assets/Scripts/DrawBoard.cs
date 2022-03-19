@@ -107,12 +107,15 @@ public class DrawBoard : MonoBehaviour
                 for (int y = 0; y < boardSize; y++)
                 {
                     if (tileGrid[xSelect, ySelect].GetCurrentValue() == tileGrid[x, y].GetCurrentValue())
+                    {
                         tileGrid[x, y].HighlightSameNumberTile();
+                    }
                 }
             }
         }
-
         HighlightImportantTiles();
+        HighlightTileMatches();
+
         tileGrid[xSelect, ySelect].SelectTile();
     }
 
@@ -163,16 +166,72 @@ public class DrawBoard : MonoBehaviour
 
     }
 
+    //highlights if two tiles that can see each other have the same value
+    private void HighlightTileMatches()
+    {
+        for (int x = 0; x < boardSize; x++)
+        {
+            for (int y = 0; y < boardSize; y++)
+            {
+                HighlightImportantTileMatches(x, y);
+            }
+        }
+
+    }
+
+    //highlights tile matchs for tile (xSel, ySel)
+    private void HighlightImportantTileMatches(int xSel, int ySel)
+    {
+        if (tileGrid[xSel, ySel].GetCurrentValue() != 0)//Dont check if the tile at xSel,ySel has no value(eg. 0)
+        {
+            int xOff, yOff, x, y;
+            if (xSel < 3)
+                xOff = 0;
+            else if (xSel < 6)
+                xOff = 3;
+            else
+                xOff = 6;
+            if (ySel < 3)
+                yOff = 0;
+            else if (ySel < 6)
+                yOff = 3;
+            else
+                yOff = 6;
+            for (x = xOff; x < xOff + 3; x++)//highlight square containing selected tile
+            {
+                for (y = yOff; y < yOff + 3; y++)
+                {
+                    if (tileGrid[xSel, ySel].GetCurrentValue() == tileGrid[x, y].GetCurrentValue() && xSel != x && ySel != y)
+                        tileGrid[x, y].SetIncorrectTile();
+                }
+            }
+            for (x = 0; x < boardSize; x++)//highlight row
+            {
+                if (tileGrid[xSel, ySel].GetCurrentValue() == tileGrid[x, ySel].GetCurrentValue() && xSel != x)
+                    tileGrid[x, ySel].SetIncorrectTile();
+            }
+            for (y = 0; y < boardSize; y++)//highlight column
+            {
+                if (tileGrid[xSel, ySel].GetCurrentValue() == tileGrid[xSel, y].GetCurrentValue() && ySel != y)
+                    tileGrid[xSel, y].SetIncorrectTile();
+            }
+        }
+    }
+
     //adds value to tile that is currently selected
     public void AddTileValue(int value, bool checkCorrectness)
     {
         tileGrid[xSelect, ySelect].SetPlayerValue(value, checkCorrectness);
+        TileUnhighlighting();
+        TileHighlighting();
     }
 
     //remove value in selected tile
     public void RemoveTileValue()
     {
         tileGrid[xSelect, ySelect].RemoveValue();
+        TileUnhighlighting();
+        TileHighlighting();
     }
 
     //adds val as a note (not counted in correctness/completion)
