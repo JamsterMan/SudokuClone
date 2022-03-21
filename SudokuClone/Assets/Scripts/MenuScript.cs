@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MenuScript: MonoBehaviour
 {
+    private int MainMenuBulidIndex = 0;
+
     public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -12,5 +14,10 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Exiting Application");
         Application.Quit();
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(MainMenuBulidIndex);
     }
 }

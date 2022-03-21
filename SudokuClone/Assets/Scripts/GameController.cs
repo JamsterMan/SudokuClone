@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     public DrawBoard drawBoard;
     public bool checkCorrectness = false;
     public bool addNotes = false;
+    public GameObject pauseMenu;
 
     private readonly int boardSize = 9;
     private bool isGameDone = false;
@@ -42,6 +43,11 @@ public class GameController : MonoBehaviour
             {
                 Debug.Log("Game Win!");
                 isGameDone = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                pauseMenu.SetActive(true);
             }
         }
     }
