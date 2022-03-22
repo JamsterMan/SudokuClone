@@ -13,10 +13,11 @@ public class NoteControl : MonoBehaviour
         RemoveNotes();
     }
 
-    //sets text in val -1 index to active/inactive
-    public void ShowNoteValue(int val)
+    //sets text in val -1 index to active/inactive, and returns true if activated/ false if deactivated
+    public bool ShowNoteValue(int val)
     {
         texts[val -1].gameObject.SetActive(!texts[val-1].IsActive());
+        return texts[val - 1].IsActive();
     }
 
     public void RemoveNotes()
@@ -25,5 +26,10 @@ public class NoteControl : MonoBehaviour
         {
             text.gameObject.SetActive(false);
         }
+    }
+
+    public void SetNoteValue(int val, bool setValue)
+    {
+        texts[val - 1].gameObject.SetActive(setValue);
     }
 }

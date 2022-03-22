@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class DrawBoard : MonoBehaviour
 {
-    private TileControll[,] tileGrid = new TileControll[9,9];
+    private TileControl[,] tileGrid = new TileControl[9,9];
     private int xSelect = 0,ySelect = 8;
     private readonly int boardSize = 9;
+    private UndoScript undoControl = new UndoScript();
 
     // Start is called before the first frame update
     void Awake()
@@ -51,7 +52,7 @@ public class DrawBoard : MonoBehaviour
 
                 GameObject gameObject = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x + xOff,  y + yOff, 0), Quaternion.identity) as GameObject;
                 gameObject.transform.parent = this.transform;//keeps unity editor clean
-                tileGrid[x, y] = gameObject.GetComponent<TileControll>();
+                tileGrid[x, y] = gameObject.GetComponent<TileControl>();
             }
         }
     }
@@ -221,6 +222,7 @@ public class DrawBoard : MonoBehaviour
     //adds value to tile that is currently selected
     public void AddTileValue(int value, bool checkCorrectness)
     {
+        undoControl.AddCommand(UndoValues());
         tileGrid[xSelect, ySelect].SetPlayerValue(value, checkCorrectness);
         TileUnhighlighting();
         TileHighlighting();
@@ -237,6 +239,7 @@ public class DrawBoard : MonoBehaviour
     //adds val as a note (not counted in correctness/completion)
     public void AddNoteValue(int value)
     {
+        undoControl.AddCommand(UndoValues());
         tileGrid[xSelect, ySelect].SetNoteValue(value);
     }
     
@@ -296,6 +299,43 @@ public class DrawBoard : MonoBehaviour
             {
                 tileGrid[x, y].CompleteTile();
             }
+        }
+    }
+
+    //sets up the struct used to store the state before an action
+    private UndoTiles UndoValues()
+    {
+        UndoTiles undo = new UndoTiles();
+        undo.row = xSelect;
+        undo.col = ySelect;
+        undo.oldValue = tileGrid[xSelect, ySelect].GetCurrentValue();
+        undo.undoNotes = new bool[9];
+        for (int i = 0; i < 9; i++)
+        {
+            undo.undoNotes[i] = tileGrid[xSelect, ySelect].IsNoteActive(i + 1);
+        }
+        return undo;
+    }
+
+    public void UndoTiles(bool checkCorrectness)
+    {
+        UndoTiles undo = undoControl.GetLastCommand();
+        if (undo.row != -1 && undo.col != -1)
+        {
+            Debug.Log("Undo command");
+            Debug.Log(undo.row + " , " + undo.col + " : " + undo.oldValue);
+            tileGrid[undo.row, undo.col].SetUndoValue(undo.oldValue, checkCorrectness);
+            for (int i = 0; i < 9; i++)
+            {
+                tileGrid[undo.row, undo.col].SetUndoNoteValue(i + 1, undo.undoNotes[i]);
+                Debug.Log(undo.undoNotes[i]);
+            }
+            TileUnhighlighting();
+            TileHighlighting();
+        }
+        else
+        {
+            Debug.Log("No commands Left in list");
         }
     }
 }

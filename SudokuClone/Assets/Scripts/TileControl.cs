@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TileControll : MonoBehaviour
+public class TileControl : MonoBehaviour
 {
     public Sprite normalTile;
     public Sprite selectedTile;
@@ -19,9 +19,15 @@ public class TileControll : MonoBehaviour
     private bool isEditable = true;
     private int correctValue;
     private int currentValue = 0;
+    private bool[] notesActive;
 
     private void Awake()
     {
+        notesActive = new bool[9];
+        for (int i = 0; i < 9; i++)
+        {
+            notesActive[i] = false;
+        }
         text = GetComponentInChildren<Text>();
         notes = GetComponentInChildren<NoteControl>();
         GetComponent<SpriteRenderer>().sprite = normalTile;
@@ -51,6 +57,7 @@ public class TileControll : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = sameAsSelectedTile;
     }
 
+    //sets Tile to IncorrectTile sprite
     public void SetIncorrectTile()
     {
         GetComponent<SpriteRenderer>().sprite = IncorrectTile;
@@ -154,13 +161,17 @@ public class TileControll : MonoBehaviour
     private void RemoveAllNotes()
     {
         notes.RemoveNotes();
+        for (int i = 0; i < 9; i++)
+        {
+            notesActive[i] = false;
+        }
     }
 
     //show the note corrisponding to val (1 to 9)
     public void SetNoteValue(int val)
     {
         if (isEditable && currentValue == 0)
-            notes.ShowNoteValue(val);
+            notesActive[val-1] = notes.ShowNoteValue(val);
     }
 
     //currentValue gettter
@@ -177,6 +188,34 @@ public class TileControll : MonoBehaviour
             currentValue = correctValue;
             text.color = playerInputCorrect;
             text.text = "" + currentValue;
+        }
+    }
+
+    //returns if note corrisponding to val is active
+    public bool IsNoteActive(int Val)
+    {
+        return notesActive[Val - 1];
+    }
+
+    //sets value if player hits undo
+    public void SetUndoValue(int value, bool checkCorrectness)
+    {
+        if (value > 0 && value < 10)
+        {
+            SetPlayerValue(value, checkCorrectness);
+        }
+        else if (value == 0)
+        {
+            RemoveValue();
+        }
+    }
+
+    public void SetUndoNoteValue(int val, bool setValue)
+    {
+        if (isEditable && currentValue == 0)
+        {
+            notes.SetNoteValue(val, setValue);
+            notesActive[val - 1] = setValue;
         }
     }
 }

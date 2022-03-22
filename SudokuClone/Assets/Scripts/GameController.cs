@@ -185,4 +185,9 @@ public class GameController : MonoBehaviour
     {
         addNotes = notes;
     }
+
+    public void Undo()
+    {
+        drawBoard.UndoTiles(checkCorrectness);
+    }
 }
