@@ -322,20 +322,17 @@ public class DrawBoard : MonoBehaviour
         UndoTiles undo = undoControl.GetLastCommand();
         if (undo.row != -1 && undo.col != -1)
         {
-            Debug.Log("Undo command");
-            Debug.Log(undo.row + " , " + undo.col + " : " + undo.oldValue);
             tileGrid[undo.row, undo.col].SetUndoValue(undo.oldValue, checkCorrectness);
             for (int i = 0; i < 9; i++)
             {
                 tileGrid[undo.row, undo.col].SetUndoNoteValue(i + 1, undo.undoNotes[i]);
-                Debug.Log(undo.undoNotes[i]);
             }
             TileUnhighlighting();
             TileHighlighting();
         }
         else
         {
-            Debug.Log("No commands Left in list");
+            Debug.Log("No commands Left to Undo");
         }
     }
 }

@@ -9,7 +9,8 @@ public class TileControl : MonoBehaviour
     public Sprite selectedTile;
     public Sprite highlightTile;
     public Sprite sameAsSelectedTile;
-    public Sprite IncorrectTile;
+    public Sprite incorrectTile;
+    public Color startingColor;
     public Color playerInputCorrect;
     public Color playerInputIncorrect;
 
@@ -60,7 +61,7 @@ public class TileControl : MonoBehaviour
     //sets Tile to IncorrectTile sprite
     public void SetIncorrectTile()
     {
-        GetComponent<SpriteRenderer>().sprite = IncorrectTile;
+        GetComponent<SpriteRenderer>().sprite = incorrectTile;
     }
 
     //set value of starting tiles
@@ -145,6 +146,7 @@ public class TileControl : MonoBehaviour
         currentValue = 0;
         correctValue = 0;
         text.text = "";
+        text.color = startingColor;
     }
 
     //remove the added value
@@ -154,6 +156,7 @@ public class TileControl : MonoBehaviour
         {
             currentValue = 0;
             text.text = "";
+            RemoveAllNotes();
         }
     }
 

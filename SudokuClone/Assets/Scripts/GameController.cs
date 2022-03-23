@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     private readonly int boardSize = 9;
     private bool isGameDone = false;
     private bool checkCorrectnessChange;
+    private bool isPaused = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,32 +24,34 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveSelection();
-        if (isGameDone == false)
+        if (!isPaused)
         {
-            PlayerInput();
-
-            if (checkCorrectness != checkCorrectnessChange)
+            MoveSelection();
+            if (isGameDone == false)
             {
-                checkCorrectnessChange = checkCorrectness;
-                drawBoard.SetBoardCorrectness(checkCorrectness);
-            }
+                PlayerInput();
+                if (Input.GetKeyDown(KeyCode.F))//for testing, fills board with correct values
+                {
+                    CompleteBoard();
+                }
 
-            if (Input.GetKeyDown(KeyCode.F))//for testing, fills board with correct values
-            {
-                CompleteBoard();
-            }
+                if (checkCorrectness != checkCorrectnessChange)
+                {
+                    checkCorrectnessChange = checkCorrectness;
+                    drawBoard.SetBoardCorrectness(checkCorrectness);
+                }
 
-            if (drawBoard.IsBoardCorrect())
-            {
-                Debug.Log("Game Win!");
-                isGameDone = true;
+                if (drawBoard.IsBoardCorrect())
+                {
+                    Debug.Log("Game Win!");
+                    isGameDone = true;
+                }
             }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                pauseMenu.SetActive(true);
-            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseMenu.SetActive(!isPaused);
+            isPaused = !isPaused;
         }
     }
 
@@ -189,5 +192,10 @@ public class GameController : MonoBehaviour
     public void Undo()
     {
         drawBoard.UndoTiles(checkCorrectness);
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
     }
 }
