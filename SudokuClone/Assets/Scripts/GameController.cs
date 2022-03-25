@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     public DrawBoard drawBoard;
     public bool checkCorrectness = false;
     public bool addNotes = false;
+    public int difficultyIncrease = 5;
     public GameObject pauseMenu;
 
     private readonly int boardSize = 9;
@@ -18,6 +19,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameBoard.removeAttempts = difficultyIncrease;
         SetUpGameBoard();
     }
 
@@ -148,12 +150,13 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //for testing
+    //for testing to quickly solve a game board
     private void CompleteBoard()
     {
         drawBoard.CompleteBoardTiles();
     }
 
+    //fills tile with the correct starting values for a generated game board
     private void SetUpGameBoard()
     {
         checkCorrectnessChange = checkCorrectness;
@@ -179,6 +182,7 @@ public class GameController : MonoBehaviour
         Debug.Log("New Game Started");
     }
 
+    //starts/stops checking for player errors
     public void CheckForMistakes(bool checkMistakes)
     {
         checkCorrectness = checkMistakes;
@@ -189,13 +193,23 @@ public class GameController : MonoBehaviour
         addNotes = notes;
     }
 
+    //undoes the last player added/removed value
     public void Undo()
     {
         drawBoard.UndoTiles(checkCorrectness);
     }
 
+    //Sets isPaused = false to allow the game to be played again
     public void ResumeGame()
     {
         isPaused = false;
+    }
+
+    //changes difficulty of the board and generates a new one
+    //easy = 0, medium = 1, hard = 2, expert = 3
+    public void ChangeDifficulty(int val)
+    {
+        gameBoard.removeAttempts = (val*difficultyIncrease) + difficultyIncrease;
+        NewBoard();
     }
 }
