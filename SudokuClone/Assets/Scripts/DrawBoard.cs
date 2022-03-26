@@ -7,6 +7,7 @@ public class DrawBoard : MonoBehaviour
     private TileControl[,] tileGrid = new TileControl[9,9];
     private int xSelect = 0,ySelect = 8;
     private readonly int boardSize = 9;
+    public float squareGapOffset = 0.25f;
     private UndoScript undoControl = new UndoScript();
 
     // Start is called before the first frame update
@@ -37,18 +38,18 @@ public class DrawBoard : MonoBehaviour
             if (x < 3)
                 xOff = 0f;
             else if (x < 6)
-                xOff = 0.25f;
+                xOff = squareGapOffset;
             else
-                xOff = 0.5f;
+                xOff = squareGapOffset * 2f;
 
             for (int y = 0; y < boardSize; y++)
             {
                 if (y < 3)
                     yOff = 0f;
                 else if (y < 6)
-                    yOff = 0.25f;
+                    yOff = squareGapOffset;
                 else
-                    yOff = 0.5f;
+                    yOff = squareGapOffset *2f;
 
                 GameObject gameObject = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x + xOff,  y + yOff, 0), Quaternion.identity) as GameObject;
                 gameObject.transform.parent = this.transform;//keeps unity editor clean
