@@ -83,71 +83,58 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(1);
-            else
-                drawBoard.AddTileValue(1, checkCorrectness);
+            AddPlayerValue(1);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(2);
-            else
-                drawBoard.AddTileValue(2, checkCorrectness);
+            AddPlayerValue(2);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(3);
-            else
-                drawBoard.AddTileValue(3, checkCorrectness);
+            AddPlayerValue(3);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(4);
-            else
-                drawBoard.AddTileValue(4, checkCorrectness);
+            AddPlayerValue(4);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad5) || Input.GetKeyDown(KeyCode.Alpha5))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(5);
-            else
-                drawBoard.AddTileValue(5, checkCorrectness);
+            AddPlayerValue(5);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(6);
-            else
-                drawBoard.AddTileValue(6, checkCorrectness);
+            AddPlayerValue(6);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad7) || Input.GetKeyDown(KeyCode.Alpha7))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(7);
-            else
-                drawBoard.AddTileValue(7, checkCorrectness);
+            AddPlayerValue(7);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.Alpha8))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(8);
-            else
-                drawBoard.AddTileValue(8, checkCorrectness);
+            AddPlayerValue(8);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad9) || Input.GetKeyDown(KeyCode.Alpha9))//move left
         {
-            if (addNotes)
-                drawBoard.AddNoteValue(9);
-            else
-                drawBoard.AddTileValue(9, checkCorrectness);
+            AddPlayerValue(9);
         }
-        else if (Input.GetKeyDown(KeyCode.Backspace))
+        
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
             drawBoard.RemoveTileValue();
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            SetSelectionPosToMousePos();
+        }
+    }
+
+    public void AddPlayerValue(int val)
+    {
+        if (addNotes)
+            drawBoard.AddNoteValue(val);
+        else
+            drawBoard.AddTileValue(val, checkCorrectness);
     }
 
     //for testing to quickly solve a game board
@@ -170,6 +157,34 @@ public class GameController : MonoBehaviour
                 drawBoard.SetTileBoard(x, y, boardGrid[x, y], boardGridFilled[x, y]);
             }
         }
+    }
+
+    //sets the selected tile based on the mouse postion
+    private void SetSelectionPosToMousePos()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float x = mousePos.x;
+        float y = mousePos.y;
+        float offset = drawBoard.GetSquareGapOffset();
+        if (0f <= x && x < 9f + (offset * 2f) && 0f <= y && y < 9f + (offset * 2f))
+        {
+            int xInt = FloatToBoardSpaceInt(x, offset);
+            int yInt = FloatToBoardSpaceInt(y, offset);
+            drawBoard.ChangeSelectionPosition(xInt, yInt);
+        }
+    }
+
+    //adjusts the float based on the offset and returns to closest in rounded down
+    private int FloatToBoardSpaceInt(float val, float offset)
+    {
+        int newVal = -1;
+        if (val < 3f)
+            newVal = Mathf.FloorToInt(val);
+        else if (val - offset < 6f && val - offset >= 3f)
+            newVal = Mathf.FloorToInt(val - offset);
+        else if (val - (offset * 2f) < 9f && val - (offset * 2f) >= 6f)
+            newVal = Mathf.FloorToInt(val - (offset * 2f));
+        return newVal;
     }
 
     //get a new board layout

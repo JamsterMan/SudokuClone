@@ -9,6 +9,7 @@ public class DrawBoard : MonoBehaviour
     private readonly int boardSize = 9;
     public float squareGapOffset = 0.25f;
     private UndoScript undoControl = new UndoScript();
+    private float spriteAdjustment = 0.5f;//shifts sprites so that the bottom left corners are dersired positions (eg. x=0,y=0 is the corner not the center)
 
     // Start is called before the first frame update
     void Awake()
@@ -51,7 +52,7 @@ public class DrawBoard : MonoBehaviour
                 else
                     yOff = squareGapOffset *2f;
 
-                GameObject gameObject = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x + xOff,  y + yOff, 0), Quaternion.identity) as GameObject;
+                GameObject gameObject = Instantiate(Resources.Load("Prefabs/Tile", typeof(GameObject)), new Vector3(x + xOff + spriteAdjustment,  y + yOff + spriteAdjustment, 0), Quaternion.identity) as GameObject;
                 gameObject.transform.parent = this.transform;//keeps unity editor clean
                 tileGrid[x, y] = gameObject.GetComponent<TileControl>();
             }
@@ -335,5 +336,20 @@ public class DrawBoard : MonoBehaviour
         {
             Debug.Log("No commands Left to Undo");
         }
+    }
+
+    public void ChangeSelectionPosition(int x, int y)
+    {
+        if (0 <= x && x < 9 && 0 <= y && y < 9)
+        {
+            TileUnhighlighting();
+            xSelect = x;
+            ySelect = y;
+            TileHighlighting();
+        }
+    }
+    public float GetSquareGapOffset()
+    {
+        return squareGapOffset;
     }
 }
