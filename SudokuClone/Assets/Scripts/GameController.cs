@@ -120,13 +120,18 @@ public class GameController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            drawBoard.RemoveTileValue();
+            RemoveSelectedValue();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SetSelectionPosToMousePos();
         }
+    }
+
+    public void RemoveSelectedValue()
+    {
+        drawBoard.RemoveTileValue();
     }
 
     public void AddPlayerValue(int val)
