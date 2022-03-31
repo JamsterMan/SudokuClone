@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public bool addNotes = false;
     public int difficultyIncrease = 5;
     public GameObject pauseMenu;
+    public GameObject gameWonScreen;
 
     private readonly int boardSize = 9;
     private bool isGameDone = false;
@@ -45,8 +46,7 @@ public class GameController : MonoBehaviour
 
                 if (drawBoard.IsBoardCorrect())
                 {
-                    Debug.Log("Game Win!");
-                    isGameDone = true;
+                    GameWon();
                 }
             }
         }
@@ -55,6 +55,13 @@ public class GameController : MonoBehaviour
             pauseMenu.SetActive(!isPaused);
             isPaused = !isPaused;
         }
+    }
+
+    private void GameWon()
+    {
+        Debug.Log("Game Win!");
+        isGameDone = true;
+        gameWonScreen.SetActive(true);
     }
 
     //moves the selected tile based on the arrows keys
