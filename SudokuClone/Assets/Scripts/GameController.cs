@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public int difficultyIncrease = 5;
     public GameObject pauseMenu;
     public GameObject gameWonScreen;
+    public GameTimer timer;
 
     private readonly int boardSize = 9;
     private bool isGameDone = false;
@@ -54,12 +55,17 @@ public class GameController : MonoBehaviour
         {
             pauseMenu.SetActive(!isPaused);
             isPaused = !isPaused;
+            if (isPaused)
+                timer.PauseTime();
+            else
+                timer.UnPauseTime();
         }
     }
 
     private void GameWon()
     {
         Debug.Log("Game Win!");
+        timer.PauseTime();
         isGameDone = true;
         gameWonScreen.SetActive(true);
     }
@@ -230,6 +236,7 @@ public class GameController : MonoBehaviour
     public void ResumeGame()
     {
         isPaused = false;
+        timer.UnPauseTime();
     }
 
     //changes difficulty of the board and generates a new one
