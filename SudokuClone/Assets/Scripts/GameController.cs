@@ -34,10 +34,10 @@ public class GameController : MonoBehaviour
             if (isGameDone == false)
             {
                 PlayerInput();
-                if (Input.GetKeyDown(KeyCode.F))//for testing, fills board with correct values
+                /*if (Input.GetKeyDown(KeyCode.F))//for testing, fills board with correct values
                 {
                     CompleteBoard();
-                }
+                }*/
 
                 if (checkCorrectness != checkCorrectnessChange)
                 {
@@ -55,10 +55,12 @@ public class GameController : MonoBehaviour
         {
             pauseMenu.SetActive(!isPaused);
             isPaused = !isPaused;
-            if (isPaused)
-                timer.PauseTime();
-            else
-                timer.UnPauseTime();
+            if (!isGameDone) {
+                if (isPaused)
+                    timer.PauseTime();
+                else
+                    timer.UnPauseTime();
+            }
         }
     }
 
@@ -236,7 +238,8 @@ public class GameController : MonoBehaviour
     public void ResumeGame()
     {
         isPaused = false;
-        timer.UnPauseTime();
+        if (!isGameDone)
+            timer.UnPauseTime();
     }
 
     //changes difficulty of the board and generates a new one
