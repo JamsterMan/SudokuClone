@@ -57,9 +57,15 @@ public class GameController : MonoBehaviour
             isPaused = !isPaused;
             if (!isGameDone) {
                 if (isPaused)
+                {
                     timer.PauseTime();
+                    drawBoard.HideTileValues();
+                }
                 else
+                {
                     timer.UnPauseTime();
+                    drawBoard.ShowTileValues();
+                }
             }
         }
     }
@@ -239,7 +245,10 @@ public class GameController : MonoBehaviour
     {
         isPaused = false;
         if (!isGameDone)
+        {
             timer.UnPauseTime();
+            drawBoard.ShowTileValues();
+        }
     }
 
     //changes difficulty of the board and generates a new one

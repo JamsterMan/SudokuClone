@@ -352,4 +352,26 @@ public class DrawBoard : MonoBehaviour
     {
         return squareGapOffset;
     }
+
+    public void HideTileValues()
+    {
+        for (int x = 0; x < boardSize; x++)
+        {
+            for (int y = 0; y < boardSize; y++)
+            {
+                tileGrid[x, y].HideTileValue();
+            }
+        }
+    }
+
+    public void ShowTileValues()
+    {
+        for (int x = 0; x < boardSize; x++)
+        {
+            for (int y = 0; y < boardSize; y++)
+            {
+                tileGrid[x, y].ShowTileValue();
+            }
+        }
+    }
 }

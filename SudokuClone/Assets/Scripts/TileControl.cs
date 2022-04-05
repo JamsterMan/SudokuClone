@@ -221,4 +221,14 @@ public class TileControl : MonoBehaviour
             notesActive[val - 1] = setValue;
         }
     }
+
+    public void HideTileValue()
+    {
+        text.gameObject.SetActive(false);
+    }
+
+    public void ShowTileValue()
+    {
+        text.gameObject.SetActive(true);
+    }
 }
