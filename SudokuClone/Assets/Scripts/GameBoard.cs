@@ -154,6 +154,7 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    //makes a copy of the game board
     private void CopyBoard()
     {
         for (int row = 0; row < size; row++)
@@ -165,17 +166,19 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-
+    //retuns the game board copy
     public int[,] GetGameBoardCopy()
     {
         return gameBoardCopy;
     }
 
+    //returns the game board
     public int[,] GetGameBoard()
     {
         return gameBoard;
     }
 
+    //resets the game board
     public void NewGameBoard()
     {
         InitBoard();

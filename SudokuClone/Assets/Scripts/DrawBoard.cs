@@ -19,6 +19,7 @@ public class DrawBoard : MonoBehaviour
         tileGrid[xSelect, ySelect].SelectTile();//0,8 so that selection starts at the top left corner
     }
 
+    //resets all the game board tiles
     public void ResetTiles()
     {
         for (int x = 0; x < boardSize; x++)
@@ -292,26 +293,16 @@ public class DrawBoard : MonoBehaviour
         }
     }
 
-    //for testing
-    public void CompleteBoardTiles()
-    {
-        for (int x = 0; x < boardSize; x++)
-        {
-            for (int y = 0; y < boardSize; y++)
-            {
-                tileGrid[x, y].CompleteTile();
-            }
-        }
-    }
-
     //sets up the struct used to store the state before an action
     private UndoTiles UndoValues()
     {
-        UndoTiles undo = new UndoTiles();
-        undo.row = xSelect;
-        undo.col = ySelect;
-        undo.oldValue = tileGrid[xSelect, ySelect].GetCurrentValue();
-        undo.undoNotes = new bool[9];
+        UndoTiles undo = new UndoTiles
+        {
+            row = xSelect,
+            col = ySelect,
+            oldValue = tileGrid[xSelect, ySelect].GetCurrentValue(),
+            undoNotes = new bool[9]
+        };
         for (int i = 0; i < 9; i++)
         {
             undo.undoNotes[i] = tileGrid[xSelect, ySelect].IsNoteActive(i + 1);
@@ -319,6 +310,7 @@ public class DrawBoard : MonoBehaviour
         return undo;
     }
 
+    //undoes the last thing the player did up to a limit(untill the stack is empty)
     public void UndoTiles(bool checkCorrectness)
     {
         UndoTiles undo = undoControl.GetLastCommand();
@@ -338,6 +330,7 @@ public class DrawBoard : MonoBehaviour
         }
     }
 
+    //allows selected tile to change to where ever on the game board (used for mouse func)
     public void ChangeSelectionPosition(int x, int y)
     {
         if (0 <= x && x < 9 && 0 <= y && y < 9)
@@ -348,11 +341,14 @@ public class DrawBoard : MonoBehaviour
             TileHighlighting();
         }
     }
+
+    //returns the offset used to put extra space between different squares on the game board
     public float GetSquareGapOffset()
     {
         return squareGapOffset;
     }
 
+    //hides the Text of tiles (for game Pausing)
     public void HideTileValues()
     {
         for (int x = 0; x < boardSize; x++)
@@ -364,6 +360,7 @@ public class DrawBoard : MonoBehaviour
         }
     }
 
+    //shows the Text of tiles (for game Unpausing)
     public void ShowTileValues()
     {
         for (int x = 0; x < boardSize; x++)
@@ -373,5 +370,11 @@ public class DrawBoard : MonoBehaviour
                 tileGrid[x, y].ShowTileValue();
             }
         }
+    }
+
+    //reveals selected tile for the player
+    public void RevealSelectedTileValue()
+    {
+        tileGrid[xSelect, ySelect].RevealTile();
     }
 }

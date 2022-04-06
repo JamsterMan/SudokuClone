@@ -183,17 +183,6 @@ public class TileControl : MonoBehaviour
         return currentValue;
     }
 
-    //for testing**********************************************************
-    public void CompleteTile()
-    {
-        if (isEditable)
-        {
-            currentValue = correctValue;
-            text.color = playerInputCorrect;
-            text.text = "" + currentValue;
-        }
-    }
-
     //returns if note corrisponding to val is active
     public bool IsNoteActive(int Val)
     {
@@ -213,6 +202,7 @@ public class TileControl : MonoBehaviour
         }
     }
 
+    //sets up values to allow undo functionality
     public void SetUndoNoteValue(int val, bool setValue)
     {
         if (isEditable && currentValue == 0)
@@ -222,13 +212,24 @@ public class TileControl : MonoBehaviour
         }
     }
 
+    //sets text component to unactive
     public void HideTileValue()
     {
         text.gameObject.SetActive(false);
     }
 
+    //sets text component to active
     public void ShowTileValue()
     {
         text.gameObject.SetActive(true);
+    }
+
+    //show the correct values and sets to unediable
+    public void RevealTile()
+    {
+        currentValue = correctValue;
+        text.color = startingColor;
+        text.text = "" + currentValue;
+        isEditable = false;
     }
 }

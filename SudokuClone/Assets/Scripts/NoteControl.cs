@@ -20,6 +20,7 @@ public class NoteControl : MonoBehaviour
         return texts[val - 1].IsActive();
     }
 
+    //hides all the notes
     public void RemoveNotes()
     {
         foreach (Text text in texts)
@@ -28,6 +29,7 @@ public class NoteControl : MonoBehaviour
         }
     }
 
+    //sets notes to active (used for undo functionality)
     public void SetNoteValue(int val, bool setValue)
     {
         texts[val - 1].gameObject.SetActive(setValue);

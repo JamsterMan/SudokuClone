@@ -34,10 +34,6 @@ public class GameController : MonoBehaviour
             if (isGameDone == false)
             {
                 PlayerInput();
-                /*if (Input.GetKeyDown(KeyCode.F))//for testing, fills board with correct values
-                {
-                    CompleteBoard();
-                }*/
 
                 if (checkCorrectness != checkCorrectnessChange)
                 {
@@ -163,12 +159,6 @@ public class GameController : MonoBehaviour
             drawBoard.AddTileValue(val, checkCorrectness);
     }
 
-    //for testing to quickly solve a game board
-    private void CompleteBoard()
-    {
-        drawBoard.CompleteBoardTiles();
-    }
-
     //fills tile with the correct starting values for a generated game board
     private void SetUpGameBoard()
     {
@@ -229,6 +219,7 @@ public class GameController : MonoBehaviour
         checkCorrectness = checkMistakes;
     }
 
+    //sets the bool used to determine if the player is writeing notes or real values
     public void SetAddNotes(bool notes)
     {
         addNotes = notes;
@@ -257,5 +248,11 @@ public class GameController : MonoBehaviour
     {
         gameBoard.removeAttempts = (val*difficultyIncrease) + difficultyIncrease;
         NewBoard();
+    }
+
+    //reveals Selected tile to the player
+    public void GiveHintValue()
+    {
+        drawBoard.RevealSelectedTileValue();
     }
 }

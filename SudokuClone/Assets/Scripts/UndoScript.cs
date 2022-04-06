@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class UndoScript
 {
-    private Stack<UndoTiles> commandsList;
+    private readonly Stack<UndoTiles> commandsList;
     private readonly int maxSizeStack;
     private UndoTiles emptyList;
 
+    //consturctor
     public UndoScript()
     {
         maxSizeStack = 50;
@@ -16,6 +17,7 @@ public class UndoScript
         emptyList.col = -1;
     }
 
+    //adds a player command to the stack
     public void AddCommand(UndoTiles undo)
     {
         if(commandsList.Count > maxSizeStack)
@@ -23,6 +25,7 @@ public class UndoScript
         commandsList.Push(undo);
     }
 
+    //pops last command off the stack
     public UndoTiles GetLastCommand()
     {
         if (commandsList.Count != 0)
@@ -31,6 +34,7 @@ public class UndoScript
             return emptyList;
     }
 
+    //removes oldest value in the stack (keep the stack from getting too large)
     private void RemoveOldestValue()
     {
         Stack<UndoTiles> tempList = new Stack<UndoTiles>();
