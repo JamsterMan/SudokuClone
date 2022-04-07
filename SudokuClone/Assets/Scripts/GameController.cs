@@ -210,6 +210,7 @@ public class GameController : MonoBehaviour
         gameBoard.NewGameBoard();
         drawBoard.ResetTiles();
         SetUpGameBoard();
+        timer.ResetTimer();
         Debug.Log("New Game Started");
     }
 

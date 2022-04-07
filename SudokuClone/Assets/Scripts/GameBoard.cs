@@ -11,6 +11,7 @@ public class GameBoard : MonoBehaviour
 
     private int[,] gameBoardCopy = new int[9, 9];
     private int solutionCount;
+    private bool tooManySolutions;
 
     // Start is called before the first frame update
     void Awake()
@@ -115,6 +116,7 @@ public class GameBoard : MonoBehaviour
             gameBoardCopy[row, col] = 0;
 
             solutionCount = 0;
+            tooManySolutions = false;
             SolveBoard();
             if (solutionCount != 1)
             {
@@ -127,6 +129,9 @@ public class GameBoard : MonoBehaviour
     //trys to solve the current board + counts how many solutions there are (we only want one posible solution)
     private void SolveBoard()
     {
+        if (tooManySolutions)
+            return;
+
         for (int row = 0; row < size; row++)
         {
             for (int col = 0; col < size; col++)
@@ -142,6 +147,13 @@ public class GameBoard : MonoBehaviour
                             if (CheckBoard(gameBoardCopy))
                             {
                                 solutionCount++;//track number of solutions
+                                if(solutionCount > 1)
+                                {
+                                    tooManySolutions = true;
+                                    return;
+                                }
+                                gameBoardCopy[row, col] = 0;//dont waste time trying 2-9 if one is the solution for the final tile
+                                return;
                             }
                             else
                                 SolveBoard();

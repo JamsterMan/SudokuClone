@@ -63,4 +63,15 @@ public class GameTimer : MonoBehaviour
         timerRunning = true;
         time = timeBeforePause;
     }
+
+    public void ResetTimer()
+    {
+        time = 0f;
+        timeBeforePause = 0f;
+        displayTimeSec = 0;
+        displayTimeMin = 0;
+        timerRunning = true;
+
+        UpdateTimeUI();
+    }
 }
